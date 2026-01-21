@@ -6,8 +6,8 @@
   :main clooj.core
   :jvm-opts ["--add-exports" "java.desktop/com.apple.eawt=ALL-UNNAMED"]
   :dependencies [[org.clojure/clojure "1.11.1"]
-                 [clj-inspector "0.0.16"]
-                 [slamhound "1.5.5"]
-                 [com.cemerick/pomegranate "1.1.0"]
+                 #_[clj-inspector "0.0.16"]
+                 #_[slamhound "1.5.5"]
+                 #_[com.cemerick/pomegranate "1.1.0"]
                  [com.fifesoft/rsyntaxtextarea "3.4.0"]
-                 [nrepl/nrepl "1.1.1"]])
+                 #_[nrepl/nrepl "1.1.1"]]) ;;klm

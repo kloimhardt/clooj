@@ -13,15 +13,15 @@
            (java.awt Rectangle)
            (java.net URL URLClassLoader URLDecoder)
            (java.util.concurrent LinkedBlockingQueue))
-  (:require [clj-inspector.jars :as jars]
+  (:require #_[clj-inspector.jars :as jars]
             [clojure.string :as string]
-            [nrepl.core :as nrepl]
+            #_[nrepl.core :as nrepl]
             [clojure.java.io :as io]
             [clooj.brackets :as brackets]
-            [clooj.help :as help]
+            #_[clooj.help :as help]
             [clooj.project :as project]
-            [clooj.repl.external :as external]
-            [clooj.repl.lein :as lein]
+            #_[clooj.repl.external :as external]
+            #_[clooj.repl.lein :as lein]
             [clooj.protocols :as protocols]
             [clooj.utils :as utils]))
 
@@ -57,7 +57,8 @@
     (-> repl deref :project-path)))
 
 (defn initialize-repl [repl]
-  (.evaluate repl
+  ;;klm
+  #_(.evaluate repl
     (str
       "(do"
       (utils/local-clj-source "clooj/cemerick/pomegranate.clj")
@@ -81,7 +82,7 @@
                  (repeatedly #(try (read rdr#)
                                    (catch Exception e# :EOF_REACHED))))))
 
-(defn cmd-attach-file-and-line [cmd file line classpaths]
+#_(defn cmd-attach-file-and-line [cmd file line classpaths] ;;klm
   (let [read-string-code (read-string-at cmd line)
         short-file (last (.split file "/"))
         namespaces (namespaces-from-code cmd)]
@@ -191,7 +192,8 @@
     (catch Exception e)))
 
 (defn start-repl [app project-path]
-  (let [project-path (if (utils/file-exists? project-path) project-path nil)]
+  nil ;; klm
+  #_(let [project-path (if (utils/file-exists? project-path) project-path nil)]
     (utils/append-text (app :repl-out-text-area)
                        (str "\n=== Starting new REPL at " project-path " ===\n"))
     (let [classpath-items ;(lein/lein-classpath-items project-path)

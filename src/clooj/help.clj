@@ -17,9 +17,9 @@
             [clooj.collaj :as collaj]
             [clooj.utils :as utils]
             [clooj.brackets :as brackets]
-            [cemerick.pomegranate.aether :as aether]
-            [clj-inspector.jars :as jars]
-            [clj-inspector.vars :as vars]))
+            ;; [cemerick.pomegranate.aether :as aether]
+            #_[clj-inspector.jars :as jars]
+            #_[clj-inspector.vars :as vars]))
 
 (def var-maps-agent (agent nil))
 
@@ -48,14 +48,14 @@
         (for [var-map var-maps]
           [[(:ns var-map) (:name var-map)] var-map])))
 
-(defn classpath-to-jars [project-path classpath]
+#_(defn classpath-to-jars [project-path classpath]
   (apply concat
     (for [item classpath]
       (cond (.endsWith item "*") (jars/jar-files (apply str (butlast item)))
             (.endsWith item ".jar") (list (File. item))
             :else (jars/jar-files item)))))
 
-(defn get-sources-from-jars [project-path classpath]
+#_(defn get-sources-from-jars [project-path classpath]
    (->> (classpath-to-jars project-path classpath)
        (mapcat jars/clj-sources-from-jar)
        merge
@@ -72,7 +72,8 @@
 
 (defn get-var-maps [project-path classpath]
   (make-var-super-map
-      (mapcat #(vars/analyze-clojure-source "clj" %)
+    []
+      #_(mapcat #(vars/analyze-clojure-source "clj" %) ;;klm
               (concat
                 (get-sources-from-jars project-path classpath)
                 (get-sources-from-clj-files classpath)))))
@@ -111,7 +112,8 @@
   (-> app :doc-text-area .getText read-string))
 
 (defn ns-available-names [app]
-  (vars/parse-ns-form (current-ns-form app)))
+  {}
+  #_(vars/parse-ns-form (current-ns-form app))) ;;klm
 
 (defn arglist-from-var-map [m]
   (or
@@ -342,15 +344,15 @@
 
 (defn load-dependencies [app artifact]
   (utils/awt-event (utils/append-text (app :repl-out-text-area)
-               (str "\nLoading " artifact " ... ")))
-  (let [deps (cemerick.pomegranate.aether/resolve-dependencies
+               (str "\nLoading " artifact " ... (not implemented) "))) ;; klm
+  #_(let [deps (cemerick.pomegranate.aether/resolve-dependencies  ;;klm
                :coordinates [artifact]
                :repositories
                  (merge aether/maven-central
                         {"clojars" "http://clojars.org/repo"}))]
     (add-classpath-to-repl app (aether/dependency-files deps)))
   (utils/append-text (app :repl-out-text-area)
-                     (str "done.")))
+                     (str "not done in this fork of clooj."))) ;;klm
 
 (defn update-token [app text-comp new-token]
   (utils/awt-event

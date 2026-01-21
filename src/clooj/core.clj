@@ -346,10 +346,8 @@
 
 (def no-project-txt
     "\n Welcome to clooj, a lightweight IDE for clojure\n
-     To start coding, you can either\n
-       a. create a new project
-            (select the Project > New... menu), or
-       b. open an existing project
+     To start coding, \n
+      open a directory
             (select the Project > Open... menu)\n
      and then either\n
        a. create a new file
@@ -627,20 +625,22 @@
 "))
 
 (defn specify-source [project-dir title default-namespace]
-  (when-let [namespace (JOptionPane/showInputDialog nil
-                         "Please enter a fully-qualified namespace"
+  (when-let [namespace (JOptionPane/showInputDialog
+                         nil
+                         (str "Enter name for file in \n" project-dir)
                          title
                          JOptionPane/QUESTION_MESSAGE
                          nil
                          nil
                          default-namespace)]
-    (let [tokens (map munge (.split namespace "\\."))
-          dirs (cons "src" (butlast tokens))
+    (let [tokens    (map munge (.split namespace "\\."))
+          dirs      (cons "src" (butlast tokens))
           dirstring (apply str (interpose File/separator dirs))
-          name (last tokens)
-          the-dir (File. project-dir dirstring)]
-      (.mkdirs the-dir)
-      [(File. the-dir (str name ".clj")) namespace])))
+          name      (last tokens)
+          the-dir   (File. project-dir dirstring)]
+      #_(.mkdirs the-dir) ;;klm
+      #_[(File. the-dir (str name ".clj")) namespace] ;; klm
+      [(File. project-dir namespace) namespace])))
 
 (defn create-file [app project-dir default-namespace]
    (when-let [[file namespace] (specify-source project-dir
@@ -743,18 +743,30 @@
     (. (app :frame) setJMenuBar menu-bar)
     (let [file-menu
           (utils/add-menu menu-bar "File" "F"
-            ["New" "N" "cmd1 N" #(create-file app (first (project/get-selected-projects app)) "")]
+            ["New" "N" "cmd1 N"
+             #(cond
+                (empty? @project/project-set)
+                (JOptionPane/showMessageDialog
+                  nil "Open an existing directory \n (select the Project > Open... menu)")
+
+                (not (first (project/get-selected-projects app)))
+                (JOptionPane/showMessageDialog
+                  nil "Click on project in the leftmost pane \n (so that it is blue)")
+
+                :else
+                (create-file app (first (project/get-selected-projects app)) "")
+                )]
             ["Save" "S" "cmd1 S" #(save-file app)]
-            ["Move/Rename" "M" nil #(rename-file app)]
+            #_["Move/Rename" "M" nil #(rename-file app)]
             ["Revert" "R" nil #(revert-file app)]
-            ["Delete" nil nil #(delete-file app)])]
+            #_["Delete" nil nil #(delete-file app)])]
       (when-not (utils/is-mac)
         (utils/add-menu-item file-menu "Exit" "X" nil #(System/exit 0))))
     (utils/add-menu menu-bar "Project" "P"
-      ["New..." "N" "cmd1 shift N" #(new-project app)]
+      #_["New..." "N" "cmd1 shift N" #(new-project app)] ;;klm
       ["Open..." "O" "cmd1 shift O" #(open-project app)]
-      ["Move/Rename" "M" nil #(project/rename-project app)]
-      ["Remove" nil nil #(remove-project app)])
+      #_["Move/Rename" "M" nil #(project/rename-project app)] ;;klm
+      ["Remove from pane" nil nil #(remove-project app)])
     (utils/add-menu menu-bar "Source" "U"
       ["Comment" "C" "cmd1 SEMICOLON" #(utils/toggle-comment (:doc-text-area app))]
       ["Fix indentation" "F" "cmd1 BACK_SLASH" #(indent/fix-indent-selected-lines (:doc-text-area app))]
@@ -764,7 +776,7 @@
       ["Go to line..." "G" "cmd1 L" #(move-caret-to-line (:doc-text-area app))]
       ;["Go to definition" "G" "cmd1 D" #(goto-definition (repl/get-file-ns app) app)]
       )
-    (utils/add-menu menu-bar "REPL" "R"
+    #_(utils/add-menu menu-bar "REPL" "R"
       ["Evaluate here" "E" "cmd1 ENTER" #(repl/send-selected-to-repl app)]
       ["Evaluate entire file" "F" "cmd1 E" #(repl/send-doc-to-repl app)]
       ["Apply file ns" "A" "cmd1 shift A" #(repl/apply-namespace-to-repl app)]
@@ -777,7 +789,7 @@
       ["Find next" "N" "cmd1 G" #(search/highlight-step app false)]
       ["Find prev" "P" "cmd1 shift G" #(search/highlight-step app true)])
     (utils/add-menu menu-bar "Window" "W"
-      ["Go to REPL input" "R" "cmd1 3" #(.requestFocusInWindow (:repl-in-text-area app))]
+      #_["Go to REPL input" "R" "cmd1 3" #(.requestFocusInWindow (:repl-in-text-area app))]
       ["Go to Editor" "E" "cmd1 2" #(.requestFocusInWindow (:doc-text-area app))]
       ["Go to Project Tree" "P" "cmd1 1" #(.requestFocusInWindow (:docs-tree app))]
       ["Increase font size" nil "cmd1 PLUS" #(grow-font app)]
@@ -811,8 +823,8 @@
     (reset! current-app app)
     (make-menus app)
     (add-visibility-shortcut app)
-    (repl/add-repl-input-handler app)
-    (help/setup-tab-help (app :repl-in-text-area) app)
+    #_(repl/add-repl-input-handler app) ;; klm
+    #_(help/setup-tab-help (app :repl-in-text-area) app)
     (doall (map #(project/add-project app %) (project/load-project-set)))
     (let [frame (app :frame)]
       (utils/persist-window-shape utils/clooj-prefs "main-window" frame)
@@ -823,7 +835,7 @@
     (let [tree (app :docs-tree)]
       (project/load-expanded-paths tree)
       (when (false? (project/load-tree-selection tree))
-        (repl/start-repl app nil)))
+        #_(repl/start-repl app nil) nil)) ;;klm
     (apply-settings app @(:settings app))))
 
 (defn -show []
