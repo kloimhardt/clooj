@@ -448,7 +448,7 @@
         repl-panel (JPanel.)
         repl-label (JLabel. "Clojure REPL output")
         repl-input-label (JLabel. "Clojure REPL input \u2191")
-        split-pane (utils/make-split-pane doc-split-pane repl-panel true gap 0.5)
+        split-pane doc-split-pane #_(utils/make-split-pane doc-split-pane repl-panel true gap 0.5)
         app (merge {:file (atom nil)
                     :repl (atom nil)
                     :var-maps (atom nil)
@@ -513,14 +513,14 @@
       (.setLayout (SpringLayout.))
       (.add completion-label)
       (.add completion-scroll-pane))
-    (utils/constrain-to-parent completion-label :n 0 :w 0 :n 15 :e 0)
-    (utils/constrain-to-parent completion-scroll-pane :n 16 :w 0 :s 0 :e 0)
-    (utils/constrain-to-parent repl-label :n 0 :w 0 :n 15 :e 0)
-    (utils/constrain-to-parent repl-input-label :s -15 :w 0 :s 0 :e 0)
-    (utils/constrain-to-parent repl-split-pane :n 16 :w 0 :s -16 :e 0)
+    #_(utils/constrain-to-parent completion-label :n 0 :w 0 :n 15 :e 0)
+    #_(utils/constrain-to-parent completion-scroll-pane :n 16 :w 0 :s 0 :e 0)
+    #_(utils/constrain-to-parent repl-label :n 0 :w 0 :n 15 :e 0)
+    #_(utils/constrain-to-parent repl-input-label :s -15 :w 0 :s 0 :e 0)
+    #_(utils/constrain-to-parent repl-split-pane :n 16 :w 0 :s -16 :e 0)
     (utils/constrain-to-parent docs-tree-label :n 0 :w 0 :n 15 :e 0)
     (utils/constrain-to-parent docs-tree-scroll-pane :n 16 :w 0 :s 0 :e 0)
-    (help/setup-completion-list completion-list app)
+    #_(help/setup-completion-list completion-list app)
     (doto pos-label
       (.setFont (Font. "Courier" Font/PLAIN 13)))
     (doto repl-in-text-area
@@ -772,7 +772,7 @@
       ["Fix indentation" "F" "cmd1 BACK_SLASH" #(indent/fix-indent-selected-lines (:doc-text-area app))]
       ["Indent lines" "I" "cmd1 CLOSE_BRACKET" #(utils/indent (:doc-text-area app))]
       ["Unindent lines" "D" "cmd1 OPEN_BRACKET" #(utils/unindent (:doc-text-area app))]
-      ["Name search/docs" "S" "TAB" #(help/show-tab-help app (help/find-focused-text-pane app) inc)]
+      #_["Name search/docs" "S" "TAB" #(help/show-tab-help app (help/find-focused-text-pane app) inc)]
       ["Go to line..." "G" "cmd1 L" #(move-caret-to-line (:doc-text-area app))]
       ;["Go to definition" "G" "cmd1 D" #(goto-definition (repl/get-file-ns app) app)]
       )
