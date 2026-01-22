@@ -346,13 +346,14 @@
 
 (def no-project-txt
     "\n Welcome to clooj, a lightweight IDE for clojure\n
-     To start coding, \n
-      open a directory
-            (select the File > Open... menu)\n
-     and then either\n
-       a. create a new file
-            (select the File > New menu), or
-       b. open an existing file
+     vital hint for Clojure coding:
+     double-click a paren within your code, then cut&paste
+     double-click a paren selects the form (as they call it)
+
+     now you can either
+     a. create a new file
+            (select File > New...), or
+     b. open an existing file
             (click on it in the tree at left).")
 
 (def no-file-txt
@@ -628,7 +629,7 @@
   (when-let [namespace (JOptionPane/showInputDialog
                          nil
                          (str "Enter a name ending with .clj \n
-the new file is created in the following top directory \n" project-dir)
+Directory of the new file is the top directory \n" project-dir)
                          title
                          JOptionPane/QUESTION_MESSAGE
                          nil
@@ -763,7 +764,9 @@ the new file is created in the following top directory \n" project-dir)
 
                 (not (first (project/get-selected-projects app)))
                 (JOptionPane/showMessageDialog
-                  nil "Click on the directory in the \"Projects\" pane \n (so that it is blue)")
+                  nil "Click on your directory in the \"Projects\" pane
+(so that it's blue)
+and get a vital Clojure coding hint!")
 
                 :else
                 (create-file app (first (project/get-selected-projects app)) "")
@@ -786,6 +789,10 @@ the new file is created in the following top directory \n" project-dir)
       ["Unindent lines" "D" "cmd1 OPEN_BRACKET" #(utils/unindent (:doc-text-area app))]
       #_["Name search/docs" "S" "TAB" #(help/show-tab-help app (help/find-focused-text-pane app) inc)]
       ["Go to line..." "G" "cmd1 L" #(move-caret-to-line (:doc-text-area app))]
+      ["Editor hints ..." "H" nil
+       #(JOptionPane/showMessageDialog
+          nil "Select expression: double-click paren \n
+Undo: Cmd+z or Ctrl + z\nRedo: Cmd+Shift+Z")]
       ;["Go to definition" "G" "cmd1 D" #(goto-definition (repl/get-file-ns app) app)]
       )
     #_(utils/add-menu menu-bar "REPL" "R"

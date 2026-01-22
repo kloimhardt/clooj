@@ -133,11 +133,11 @@
               "Wrap lines in source editor"
               (:line-wrap-doc @settings)
               #(swap! settings assoc :line-wrap-doc %)))
-      (.add (check-box
+      #_(.add (check-box
               "Wrap lines in repl output"
               (:line-wrap-repl-out @settings)
               #(swap! settings assoc :line-wrap-repl-out %)))
-      (.add (check-box
+      #_(.add (check-box
               "Wrap lines in repl input"
               (:line-wrap-repl-in @settings)
               #(swap! settings assoc :line-wrap-repl-in %))))))
