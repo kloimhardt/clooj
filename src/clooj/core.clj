@@ -30,7 +30,7 @@
            (org.fife.ui.rtextarea RTextScrollPane))
   (:require [clojure.set]
             [clooj.repl.main :as repl]
-            [clooj.repl.output :as repl-output]
+            #_[clooj.repl.output :as repl-output]
             [clooj.utils :as utils]
             [clooj.help :as help]
             [clooj.navigate :as navigate]
@@ -348,7 +348,7 @@
     "\n Welcome to clooj, a lightweight IDE for clojure\n
      To start coding, \n
       open a directory
-            (select the Project > Open... menu)\n
+            (select the File > Open... menu)\n
      and then either\n
        a. create a new file
             (select the File > New menu), or
@@ -417,7 +417,7 @@
   (let [doc-text-panel (JPanel.)
         doc-label (JLabel. "Source Editor")
         repl-out-text-area (make-text-area false)
-        repl-out-scroll-pane (repl-output/tailing-scroll-pane repl-out-text-area)
+        repl-out-scroll-pane nil #_(repl-output/tailing-scroll-pane repl-out-text-area)
         repl-out-writer (repl/make-repl-writer repl-out-text-area)
         repl-in-text-area (make-text-area false)
         help-text-area (make-text-area true)
@@ -751,12 +751,15 @@ the new file is created in the following top directory \n" project-dir)
   (let [menu-bar (JMenuBar.)]
     (. (app :frame) setJMenuBar menu-bar)
     (let [file-menu
-          (utils/add-menu menu-bar "File" "F"
-            ["New" "N" "cmd1 N"
+          (utils/add-menu
+            menu-bar
+            "File" "F"
+            ["Open Directory..." "O" "cmd1 shift O" #(open-project app)]
+            ["New..." "N" "cmd1 N"
              #(cond
                 (empty? @project/project-set)
                 (JOptionPane/showMessageDialog
-                  nil "Choose a directory first \n (select the Project > Open... menu)")
+                  nil "Open a directory first \n (select the File > Open... menu)")
 
                 (not (first (project/get-selected-projects app)))
                 (JOptionPane/showMessageDialog
@@ -773,7 +776,7 @@ the new file is created in the following top directory \n" project-dir)
         (utils/add-menu-item file-menu "Exit" "X" nil #(System/exit 0))))
     (utils/add-menu menu-bar "Project" "P"
       #_["New..." "N" "cmd1 shift N" #(new-project app)] ;;klm
-      ["Open Directory..." "O" "cmd1 shift O" #(open-project app)]
+      #_["Open Directory..." "O" "cmd1 shift O" #(open-project app)]
       #_["Move/Rename" "M" nil #(project/rename-project app)] ;;klm
       ["Remove from pane" nil nil #(remove-project app)])
     (utils/add-menu menu-bar "Source" "U"

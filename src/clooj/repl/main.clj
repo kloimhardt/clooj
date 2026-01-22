@@ -98,7 +98,8 @@
 
 (defn print-to-repl
   [app cmd-str silent?]
-  (when-let [repl @(app :repl)]
+  nil
+  #_(when-let [repl @(app :repl)] ;;klm
     (.evaluate repl
                (if silent?
                       (str "(clooj.repl.remote/silent" cmd-str ")")
