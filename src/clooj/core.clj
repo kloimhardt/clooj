@@ -627,7 +627,8 @@
 (defn specify-source [project-dir title default-namespace]
   (when-let [namespace (JOptionPane/showInputDialog
                          nil
-                         (str "Enter name for file in \n" project-dir)
+                         (str "Enter a name ending with .clj \n
+the new file is created in the following top directory \n" project-dir)
                          title
                          JOptionPane/QUESTION_MESSAGE
                          nil
@@ -637,19 +638,27 @@
           dirs      (cons "src" (butlast tokens))
           dirstring (apply str (interpose File/separator dirs))
           name      (last tokens)
-          the-dir   (File. project-dir dirstring)]
+          the-dir   (File. project-dir dirstring)
+          len       (count namespace)]
       #_(.mkdirs the-dir) ;;klm
       #_[(File. the-dir (str name ".clj")) namespace] ;; klm
-      [(File. project-dir namespace) namespace])))
+      (if (and (> len 4) (= (subs namespace (- len 4)) ".clj"))
+        [(File. project-dir namespace)
+         (subs namespace 0 (- len 4))]
+        (do
+          (JOptionPane/showMessageDialog
+            nil "Nothing done. Filename needs to end with .clj")
+          [nil nil])))))
 
 (defn create-file [app project-dir default-namespace]
-   (when-let [[file namespace] (specify-source project-dir
-                                          "Create a source file"
-                                          default-namespace)]
-     (let [tree (:docs-tree app)]
-       (spit file (str "(ns " namespace ")\n"))
-       (project/update-project-tree (:docs-tree app))
-       (project/set-tree-selection tree (.getAbsolutePath file)))))
+  (let [[file namespace] (specify-source project-dir
+                                         "Create a source file"
+                                         default-namespace)]
+    (when file
+      (let [tree (:docs-tree app)]
+        (spit file (str "(ns " namespace ")\n"))
+        (project/update-project-tree (:docs-tree app))
+        (project/set-tree-selection tree (.getAbsolutePath file))))))
 
 (defn new-project-clj [app project-dir]
   (let [project-name (.getName project-dir)
@@ -747,11 +756,11 @@
              #(cond
                 (empty? @project/project-set)
                 (JOptionPane/showMessageDialog
-                  nil "Open an existing directory \n (select the Project > Open... menu)")
+                  nil "Choose a directory first \n (select the Project > Open... menu)")
 
                 (not (first (project/get-selected-projects app)))
                 (JOptionPane/showMessageDialog
-                  nil "Click on project in the leftmost pane \n (so that it is blue)")
+                  nil "Click on the directory in the \"Projects\" pane \n (so that it is blue)")
 
                 :else
                 (create-file app (first (project/get-selected-projects app)) "")
@@ -764,7 +773,7 @@
         (utils/add-menu-item file-menu "Exit" "X" nil #(System/exit 0))))
     (utils/add-menu menu-bar "Project" "P"
       #_["New..." "N" "cmd1 shift N" #(new-project app)] ;;klm
-      ["Open..." "O" "cmd1 shift O" #(open-project app)]
+      ["Open Directory..." "O" "cmd1 shift O" #(open-project app)]
       #_["Move/Rename" "M" nil #(project/rename-project app)] ;;klm
       ["Remove from pane" nil nil #(remove-project app)])
     (utils/add-menu menu-bar "Source" "U"
