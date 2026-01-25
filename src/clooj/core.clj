@@ -792,7 +792,8 @@ and get a vital Clojure coding hint!")
       ["Editor hints ..." "H" nil
        #(JOptionPane/showMessageDialog
           nil "Select expression: double-click paren \n
-Undo: Cmd+z or Ctrl + z\nRedo: Cmd+Shift+Z")]
+Undo: Cmd+z or Ctrl + z\nRedo: Cmd+Shift+Z\nEnd of File: Cmd+CursorDown\n
+https://github.com/bobbylight/RSyntaxTextArea/wiki/Keyboard-Shortcut-List")]
       ;["Go to definition" "G" "cmd1 D" #(goto-definition (repl/get-file-ns app) app)]
       )
     #_(utils/add-menu menu-bar "REPL" "R"
