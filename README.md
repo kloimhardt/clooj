@@ -5,17 +5,22 @@ This code editor, "clooj-for-students", is a fork of [clooj](https://github.com/
 ### Try out clooj-for-students
 
 1) Download `clooj_student.clj` by pressing the "Download raw file" button on the right hand side of [this page](https://github.com/kloimhardt/clooj/blob/master/clooj_student.clj)![(the down arrow next to "Raw")](download_button.png)
-2) On the command line, in the directory of the downloaded file, type:
+2) Download 'rsyntaxtextarea-3.6.1.jar' from [maven-central](https://repo1.maven.org/maven2/com/fifesoft/rsyntaxtextarea/3.6.1/)
+3) On the command line, in the directory of the downloaded file, type:
 
 ```
-java -cp noj-2-beta19.2-uber.jar clojure.main -e "(do (load-file \"clooj_student.clj\") (clooj.core/-main))"
+java -cp noj-2-beta19.2-uber.jar:rsyntaxtextarea-3.6.1.jar clojure.main -e "(do (load-file \"clooj_student.clj\") (clooj.core/-main))"
 ```
 
 ### Troubleshooting
 
+If the above does not yet work, try the following:
+
 a) To check if Java is installed, type `java` on your command shell (you may decide to [install Java](https://adoptium.net/en-GB))
-b) [Download noj-version-uber.jar](https://github.com/scicloj/noj/releases) for version `2-beta19.2` or higher and copy that jar-file into the same directory as `clooj_student.clj`
-c) Try step 2) again (make sure to change the version `2-beta19.2` into your downloaded version)
+
+b) Do you have your own `noj-version-uber.jar`? If so, in the command line of step 2), change the version `2-beta19.2` to your version. Or download the `.jar` file  from the  [github-repo](https://github.com/scicloj/noj/releases) and copy it into the same directory as `clooj_student.clj`.
+
+c) Try step 2) again
 
 ### Rationale
 
