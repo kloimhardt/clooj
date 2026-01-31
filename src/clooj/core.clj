@@ -793,6 +793,10 @@ and get a vital Clojure coding hint!")
        #(JOptionPane/showMessageDialog
           nil "Select expression: double-click paren \n
 Undo: Cmd+z or Ctrl + z\nRedo: Cmd+Shift+Z\nEnd of File: Cmd+CursorDown\n
+You actually can get a block commented with double ;;
+-- select a  block already commented by singe ; and
+-- make sure that the curser is in the empty line below
+
 https://github.com/bobbylight/RSyntaxTextArea/wiki/Keyboard-Shortcut-List")]
       ;["Go to definition" "G" "cmd1 D" #(goto-definition (repl/get-file-ns app) app)]
       )
