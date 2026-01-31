@@ -4,7 +4,7 @@ This code editor, "clooj-for-students", is a fork of [clooj](https://github.com/
 
 ### Try out clooj-for-students
 
-1) Download `clooj_student.clj` by pressing the "Download raw file" button ![(the down arrow next to "Raw")](download_button.png)[on this page](https://github.com/kloimhardt/clooj/blob/master/clooj_student.clj)
+1) Download `clooj_student.clj` by pressing the "Download raw file" button on the right hand side of [this page](https://github.com/kloimhardt/clooj/blob/master/clooj_student.clj)![(the down arrow next to "Raw")](download_button.png)
 2) On the command line, in the directory of the downloaded file, type:
 
 ```
@@ -15,7 +15,7 @@ java -cp noj-2-beta19.2-uber.jar clojure.main -e "(do (load-file \"clooj_student
 
 a) To check if Java is installed, type `java` on your command shell (you may decide to [install Java](https://adoptium.net/en-GB))
 b) [Download noj-version-uber.jar](https://github.com/scicloj/noj/releases) for version `2-beta19.2` or higher and copy that jar-file into the same directory as `clooj_student.clj`
-c) Try step 2) again
+c) Try step 2) again (make sure to change the version `2-beta19.2` into your downloaded version)
 
 ### Rationale
 
