@@ -4,14 +4,18 @@ This code editor, "clooj-for-students", is a fork of [clooj](https://github.com/
 
 ### Try out clooj-for-students
 
-1) To check if Java is installed, type `java` on your command shell (you can decide to [install Java](https://adoptium.net/en-GB))
-2) [Download noj-<version>-uber.jar](https://github.com/scicloj/noj/releases) for <version> `2-beta19.2` or higher.
-3) Download `clooj_student.clj` by pressing the "Download raw file" button [on this page](https://github.com/kloimhardt/clooj/blob/master/clooj_student.clj)
-4) After having the two downloaded files in one and the same directory, on the command line type:
+1) Download `clooj_student.clj` by pressing the "Download raw file" button ![(the down arrow next to "Raw")](download_button.png)[on this page](https://github.com/kloimhardt/clooj/blob/master/clooj_student.clj)
+2) On the command line, in the directory of the downloaded file, type:
 
 ```
 java -cp noj-2-beta19.2-uber.jar clojure.main -e "(do (load-file \"clooj_student.clj\") (clooj.core/-main))"
 ```
+
+### Troubleshooting
+
+a) To check if Java is installed, type `java` on your command shell (you may decide to [install Java](https://adoptium.net/en-GB))
+b) [Download noj-version-uber.jar](https://github.com/scicloj/noj/releases) for version `2-beta19.2` or higher and copy that jar-file into the same directory as `clooj_student.clj`
+c) Try step 2) again
 
 ### Rationale
 
