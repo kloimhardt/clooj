@@ -4,8 +4,8 @@ This code editor, "clooj-for-students", is a fork of [clooj](https://github.com/
 
 ### Try out clooj-for-students
 
-1) Download `clooj_student.clj` by pressing the "Download raw file" button on the right hand side of [this page](https://github.com/kloimhardt/clooj/blob/master/clooj_student.clj)![(the down arrow next to "Raw")](download_button.png)
-2) Download 'rsyntaxtextarea-3.6.1.jar' from [maven-central](https://repo1.maven.org/maven2/com/fifesoft/rsyntaxtextarea/3.6.1/)
+1) Download the file `clooj_student.clj` by pressing the "Download raw file" button on the right hand side of [this page](https://github.com/kloimhardt/clooj/blob/master/clooj_student.clj)![(the down arrow next to "Raw")](download_button.png)
+2) Download the file 'rsyntaxtextarea-3.6.1.jar' from [maven-central](https://repo1.maven.org/maven2/com/fifesoft/rsyntaxtextarea/3.6.1/)
 3) On the command line, in the directory of the downloaded file, type:
 
 ```
@@ -20,7 +20,7 @@ a) To check if Java is installed, type `java` on your command shell (you may dec
 
 b) Do you have your own `noj-version-uber.jar`? If so, in the command line of step 2), change the version `2-beta19.2` to your version. Or download the `.jar` file  from the  [github-repo](https://github.com/scicloj/noj/releases) and copy it into the same directory as `clooj_student.clj`.
 
-c) Try step 2) again
+c) Try step 3) again
 
 ### Rationale
 
