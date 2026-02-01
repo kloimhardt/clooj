@@ -15,7 +15,8 @@
    "help.clj"
    "search.clj"
 
-   "core.clj"])
+   "core.clj"
+   "../../fegloj_main.clj"])
 
 (spit name-target "")
 
