@@ -3,10 +3,17 @@ This code editor, "clooj-for-students", is a fork of [clooj](https://github.com/
 ---
 
 ### Try out clooj-for-students
+1) On the command line, type (if that does not work see section "Troubleshooting")
 
-1) Download the file `clooj_student.clj` by pressing the "Download raw file" button on the right hand side of [this page](https://github.com/kloimhardt/clooj/blob/master/clooj_student.clj)![(the down arrow next to "Raw")](download_button.png)
-2) Download the file 'rsyntaxtextarea-3.6.1.jar' from [maven-central](https://repo1.maven.org/maven2/com/fifesoft/rsyntaxtextarea/3.6.1/)
-3) On the command line, in the directory of the downloaded file, type:
+```
+ java -cp noj-2-beta19.1-uber.jar:./notebooks clojure.main -e "(do (require '[scicloj.clay.v2.api :as clay]) (clay/make! {:live-reload true :base-source-path \"notebooks\" :base-target-path \"temp\"}))"
+```
+
+2) Download the file `clooj_student.clj` by pressing the "Download raw file" button on the right hand side of [this page](https://github.com/kloimhardt/clooj/blob/master/clooj_student.clj)![(the down arrow next to "Raw")](download_button.png)
+
+3) Download the file 'rsyntaxtextarea-3.6.1.jar' from [maven-central](https://repo1.maven.org/maven2/com/fifesoft/rsyntaxtextarea/3.6.1/)
+
+4) On the command line, in the directory of the downloaded file, type:
 
 ```
 java -cp noj-2-beta19.1-uber.jar:rsyntaxtextarea-3.6.1.jar clojure.main -e "(do (load-file \"clooj_student.clj\") (fegloj.main/-main))"
@@ -18,9 +25,9 @@ In the above, I was assuming you already made first steps with Noj. If the hints
 
 a) To check if Java is installed, type `java` on your command shell (you may decide to [install Java](https://adoptium.net/en-GB))
 
-b) Do you have your own `noj-*-uber.jar`? If so, in the command line of step 2), change the version `2-beta19.2` to your version. Or download the `.jar` file  from the  [github-repo](https://github.com/scicloj/noj/releases) and copy it into the same directory as `clooj_student.clj`.
+b) Do you have your own `noj-*-uber.jar`? If so, in the command line of step 2), change the version `2-beta19.1` to your version. Or download the `.jar` file  from the  [github-repo](https://github.com/scicloj/noj/releases) and copy it into the same directory as `clooj_student.clj`.
 
-c) Try step 3) again
+c) Try step 1) again
 
 ### Rationale
 
@@ -46,15 +53,17 @@ Maybe search for the text "Welcome to clooj" and change it to "Welcome to awesom
 
 See that change in your editor now? How cool is that?
 
+### Proposed next steps
+
+- Create the [`noj-*-uber.jar`](https://github.com/scicloj/noj/releases) in such a way that on double-click (i.e. on open) the command of step 1) is executed. Especially add `./notebooks` to the classpath (this enables some notebook to require other namespaces).
+- Make `noj-*-uber.jar` show a window that says "Quit". Otherwise the .jar can be started only once, it cannot be stopped and restarted.
+- Produce a `noj-wheels-*-uber.jar` in such a way that on double-click (i.e. on open) the command of step 4) is executed. This is already nearly done in the [Fegloj](https://github.com/scicloj/fegloj) repository, only the dependency to Clay+Noj needs to be removed.
+
 ### Known Issues
-
-When the Java process is stopped in the console via Ctrl+Z, the editor remains open as an application that does not respond anymore. [Fegloj](https://github.com/scicloj/fegloj) does not have this problem.
-
-### Roadmap
 
 This is a bare-bones version of [clooj](https://github.com/clj-commons/clooj). I will never add additional features. The aim of this clooj-for-students is that the user eventually switches to VSCode with [Calva](https://calva.io).
 
-There is one aim though: simplify the "Try out clooj-for-students" section. I'd like to get [RSyntaxTextArea](https://github.com/bobbylight/RSyntaxTextArea) into the existing uberjar named noj-*-uber.jar located in [noj-releases](https://github.com/scicloj/noj/releases). The command should then simply be `java -jar noj-*-uber.jar clooj_student.clj`
+When the Java process is stopped in the console via Ctrl+Z, the editor remains open as an application that does not respond anymore. [Fegloj](https://github.com/scicloj/fegloj) does not have this problem.
 
 ### The File-Eval-Gui-Loop
 
@@ -66,5 +75,5 @@ The concept of File-Eval-Gui-Loop (FEGuiL a.k.a figwheel), although being a Cloj
 
 This step is for contributors to the clooj-for-students project only:
 ```
-java -cp noj-2-beta19.2-uber.jar clojure.main -e "(load-file \"build_clooj_student.clj\")"
+java -cp noj-2-beta19.1-uber.jar clojure.main -e "(load-file \"build_clooj_student.clj\")"
 ```

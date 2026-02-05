@@ -2967,7 +2967,7 @@ https://github.com/bobbylight/RSyntaxTextArea/wiki/Keyboard-Shortcut-List")]
   (let [app @cc/current-app
         project-dir (io/file ".")
         abs-path (.getAbsolutePath project-dir)
-        default-notebook (io/file "notebooks" "my_notebook.clj")]
+        #_#_default-notebook (io/file "notebooks" "my_notebook.clj")]
     (project/add-project app abs-path)
     (project/update-project-tree (:docs-tree app))
     (when-let [clj-file (or (-> (io/file project-dir "src")
