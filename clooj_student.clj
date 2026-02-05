@@ -2967,7 +2967,7 @@ https://github.com/bobbylight/RSyntaxTextArea/wiki/Keyboard-Shortcut-List")]
   (let [app @cc/current-app
         project-dir (io/file ".")
         abs-path (.getAbsolutePath project-dir)
-        #_#_default-notebook (io/file "notebooks" "my_notebook.clj")]
+        default-notebook (io/file "notebooks" "my_notebook.clj")]
     (project/add-project app abs-path)
     (project/update-project-tree (:docs-tree app))
     (when-let [clj-file (or (-> (io/file project-dir "src")
@@ -2977,11 +2977,11 @@ https://github.com/bobbylight/RSyntaxTextArea/wiki/Keyboard-Shortcut-List")]
                             project-dir)]
       (project/set-tree-selection (:docs-tree app) (.getAbsolutePath clj-file)))
     ;; open the default notebook in the editor
-    #_(when (.exists default-notebook)
+    (when (.exists default-notebook)
       (cc/restart-doc app default-notebook))))
 
 (defn -main []
-  #_(default-notebook)
+  (default-notebook)
   #_(clay/make! {:live-reload      true
                  :source-path      "my_notebook.clj"
                  :base-source-path "notebooks"

@@ -45,19 +45,23 @@ Quotes:
 
 clooj-for-students fulfills these requirements for writing "a bit of code in a short file". Importantly, its only dependency is the actively developed Java library [com.fifesoft/rsyntaxtextarea](https://github.com/bobbylight/RSyntaxTextArea/releases)
 
-### Hack your own editor
-
-Try changing the file `clooj_student.jar` in Clooj, and restart the editor.
-
-Maybe search for the text "Welcome to clooj" and change it to "Welcome to awesome clooj".
-
-See that change in your editor now? How cool is that?
-
 ### Proposed next steps
 
-- Create the [`noj-*-uber.jar`](https://github.com/scicloj/noj/releases) in such a way that on double-click (i.e. on open) the command of step 1) is executed. Especially add `./notebooks` to the classpath (this enables some notebook to require other namespaces).
-- Make `noj-*-uber.jar` show a window that says "Quit". Otherwise the .jar can be started only once, it cannot be stopped and restarted.
-- Produce a `noj-wheels-*-uber.jar` in such a way that on double-click (i.e. on open) the command of step 4) is executed. This is already nearly done in the [Fegloj](https://github.com/scicloj/fegloj) repository, only the dependency to Clay+Noj needs to be removed.
+- Create the [`noj-*-uber.jar`](https://github.com/scicloj/noj/releases) in such a way that on double-click (i.e. on open) the command of step 1) is executed. Especially add `./notebooks` to the classpath (this enables notebooks to require other namespaces).
+- Make `noj-*-uber.jar` show, on double-click (i.e. on open), a window that says "Quit". Otherwise it seems that the .jar can be started only once, it seems impossible to be stopped and restarted. At least, once I closed the Clay browser tab, ich could not get it to reappear again with a double-click.
+- Remove the Clay+Noj dependencies from [Fegloj](https://github.com/scicloj/fegloj). Rename the `fegloj.jar` release to `noj-wheels-*-uber.jar`. A double-click (i.e. open) on that .jar already executes step 4).
+
+### Why remove Clay from fegloj?
+
+There is the opinion that [`noj-*-uber.jar`](https://github.com/scicloj/noj/releases) should not have any GUI functionality whatsoever. The opinion is that whoever wants a beginner experience with Clooj should produce an entirely independent `.jar` having a GUI and also containing Clay+Noj.
+
+[Fegloj](https://github.com/scicloj/fegloj) is such an independent `.jar` having a GUI and containing Clay+Noj.
+
+I think this all-in approach of the current fegloj repository is the wrong approach. There should be only one single place where one or more .jar files containing Clay+Noj is/are released. This is because a beginner in Clojure can well be a senior scientist. As such he deserves the hottest and latest release of noj from the official maintainers. He has no time for dealing with unofficial second hand stuff.
+
+For SciCloj to provide a beginner experience, the official [`noj-*-uber.jar`](https://github.com/scicloj/noj/releases) must be able to display a minimal message to the user as he double clicks on it. Is that possible without a GUI-window opening, saying "hello, here is the "Quit" button"? Maybe there is a solution without a GUI-window, I do not know.
+
+The beginner experience is: download `noj-*-uber.jar`and `noj-wheels-*-uber.jar` and double-click on both.
 
 ### Known Issues
 
@@ -70,6 +74,15 @@ When the Java process is stopped in the console via Ctrl+Z, the editor remains o
 Clojurians work with the Read-Eval-Print-Loop (REPL). Being a stepping stone for VSCode/Calva, clooj-for-students does not and will never support a REPL. The user of clooj-for-students is meant to work in [Noj.jar live-reload mode](https://github.com/scicloj/noj?tab=readme-ov-file#live-reload-with-clay).
 
 The concept of File-Eval-Gui-Loop (FEGuiL a.k.a figwheel), although being a ClojureScript tradition, is not met with universal acclaim, I wrote a [long blog post](https://kloimhardt.github.io/blog/software/2025/03/12/scicloj_cli.html).
+
+### Hack your own editor
+
+Try changing the file `clooj_student.clj` in Clooj, and restart the editor.
+
+Maybe search for the text "Welcome to clooj" and change it to "Welcome to awesome clooj".
+
+See that change in your editor now? How cool is that?
+
 
 ### How to build clooj_student.clj
 
