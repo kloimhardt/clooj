@@ -3,10 +3,13 @@ This code editor, "clooj-for-students", is a fork of [clooj](https://github.com/
 ---
 
 ### Try out clooj-for-students
+
+The idea is to start two Java processes, first [Noj](https://github.com/scicloj/noj/releases) with Clay and then the clooj-for-students editor.
+
 1) On the command line, type (if that does not work see section "Troubleshooting")
 
 ```
- java -cp noj-2-beta19.1-uber.jar:./notebooks clojure.main -e "(do (require '[scicloj.clay.v2.api :as clay]) (clay/make! {:live-reload true :base-source-path \"notebooks\" :base-target-path \"temp\"}))"
+java -cp noj-2-beta19.1-uber.jar:./. clojure.main -e "(do (require '[scicloj.clay.v2.api :as clay]) (clay/make! {:live-reload true :base-source-path \"notebooks\" :base-target-path \"temp\"}))"
 ```
 
 2) Download the file `clooj_student.clj` by pressing the "Download raw file" button on the right hand side of [this page](https://github.com/kloimhardt/clooj/blob/master/clooj_student.clj)![(the down arrow next to "Raw")](download_button.png)
@@ -18,16 +21,11 @@ This code editor, "clooj-for-students", is a fork of [clooj](https://github.com/
 ```
 java -cp noj-2-beta19.1-uber.jar:rsyntaxtextarea-3.6.1.jar clojure.main -e "(do (load-file \"clooj_student.clj\") (fegloj.main/-main))"
 ```
+### Proposed roadmap for a SciCloj beginner experience
 
-### Troubleshooting
-
-In the above, I was assuming you already made first steps with Noj. If the hints below do not help, you need to be [getting Started with Noj](https://github.com/scicloj/noj?tab=readme-ov-file#getting-started-with-noj).
-
-a) To check if Java is installed, type `java` on your command shell (you may decide to [install Java](https://adoptium.net/en-GB))
-
-b) Do you have your own `noj-*-uber.jar`? If so, in the command line of step 2), change the version `2-beta19.1` to your version. Or download the `.jar` file  from the  [github-repo](https://github.com/scicloj/noj/releases) and copy it into the same directory as `clooj_student.clj`.
-
-c) Try step 1) again
+- Create the next release of [`noj-*-uber.jar`](https://github.com/scicloj/noj/releases) in such a way that on double-click (i.e. on open) the command of step 1) is executed. Especially add `./.` to the classpath (this enables notebooks to require other namespaces).
+- Make `noj-*-uber.jar` show, on double-click (i.e. on open), a message that describes how to quit the process. This is because it seems that currently the `noj-*-uber.jar` can be started only once via double-click, it seems impossible to be stopped and restarted. At least, when I accidentally closed the Clay browser tab, I could not get it to reappear again with a new double-click on `noj-*-uber.jar`.
+- Remove the Clay+Noj dependencies from [Fegloj](https://github.com/scicloj/fegloj). Rename the `fegloj.jar` release to `noj-wheels-*-uber.jar`. A double-click (i.e. open) on that .jar already executes step 4).
 
 ### Rationale
 
@@ -45,12 +43,6 @@ Quotes:
 
 clooj-for-students fulfills these requirements for writing "a bit of code in a short file". Importantly, its only dependency is the actively developed Java library [com.fifesoft/rsyntaxtextarea](https://github.com/bobbylight/RSyntaxTextArea/releases)
 
-### Proposed next steps
-
-- Create the [`noj-*-uber.jar`](https://github.com/scicloj/noj/releases) in such a way that on double-click (i.e. on open) the command of step 1) is executed. Especially add `./notebooks` to the classpath (this enables notebooks to require other namespaces).
-- Make `noj-*-uber.jar` show, on double-click (i.e. on open), a window that says "Quit". Otherwise it seems that the .jar can be started only once, it seems impossible to be stopped and restarted. At least, once I closed the Clay browser tab, ich could not get it to reappear again with a double-click.
-- Remove the Clay+Noj dependencies from [Fegloj](https://github.com/scicloj/fegloj). Rename the `fegloj.jar` release to `noj-wheels-*-uber.jar`. A double-click (i.e. open) on that .jar already executes step 4).
-
 ### Why remove Clay from fegloj?
 
 There is the opinion that [`noj-*-uber.jar`](https://github.com/scicloj/noj/releases) should not have any GUI functionality whatsoever. The opinion is that whoever wants a beginner experience with Clooj should produce an entirely independent `.jar` having a GUI and also containing Clay+Noj.
@@ -62,6 +54,16 @@ I think this all-in approach of the current fegloj repository is the wrong appro
 For SciCloj to provide a beginner experience, the official [`noj-*-uber.jar`](https://github.com/scicloj/noj/releases) must be able to display a minimal message to the user as he double clicks on it. Is that possible without a GUI-window opening, saying "hello, here is the "Quit" button"? Maybe there is a solution without a GUI-window, I do not know.
 
 The beginner experience is: download `noj-*-uber.jar`and `noj-wheels-*-uber.jar` and double-click on both.
+
+### Troubleshooting
+
+In the above, I was assuming you already made first steps with Noj. If the hints below do not help, you need to be [getting Started with Noj](https://github.com/scicloj/noj?tab=readme-ov-file#getting-started-with-noj).
+
+a) To check if Java is installed, type `java` on your command shell (you may decide to [install Java](https://adoptium.net/en-GB))
+
+b) Do you have your own `noj-*-uber.jar`? If so, in the command line of step 2), change the version `2-beta19.1` to your version. Or download the `.jar` file  from the  [github-repo](https://github.com/scicloj/noj/releases) and copy it into the same directory as `clooj_student.clj`.
+
+c) Try step 1) again
 
 ### Known Issues
 
@@ -82,7 +84,6 @@ Try changing the file `clooj_student.clj` in Clooj, and restart the editor.
 Maybe search for the text "Welcome to clooj" and change it to "Welcome to awesome clooj".
 
 See that change in your editor now? How cool is that?
-
 
 ### How to build clooj_student.clj
 
